@@ -1,0 +1,17 @@
+<%= form_with(model: masteragent, local: true) do |form| %>
+  <% if masteragent.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(masteragent.errors.count, "error") %> prohibited this masteragent from being saved:</h2>
+
+      <ul>
+      <% masteragent.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

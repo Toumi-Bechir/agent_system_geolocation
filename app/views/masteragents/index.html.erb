@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Masteragents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @masteragents.each do |masteragent| %>
+      <tr>
+        <td><%= link_to 'Show', masteragent %></td>
+        <td><%= link_to 'Edit', edit_masteragent_path(masteragent) %></td>
+        <td><%= link_to 'Destroy', masteragent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Masteragent', new_masteragent_path %>

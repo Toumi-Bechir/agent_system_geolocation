@@ -1,0 +1,2 @@
+class Masteragent < ApplicationRecord
+end
