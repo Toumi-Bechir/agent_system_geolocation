@@ -69,6 +69,7 @@ class MasteragentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def masteragent_params
-      params.fetch(:masteragent, {})
+      #params.fetch(:masteragent, {})
+      params.require(:masteragent).permit(:name)
     end
 end

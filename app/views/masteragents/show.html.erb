@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<h2><%= @masteragent.name %></h2>
+<%= link_to 'Add Agent', new_masteragent_agent_path(@masteragent) %> |
 <%= link_to 'Edit', edit_masteragent_path(@masteragent) %> |
 <%= link_to 'Back', masteragents_path %>

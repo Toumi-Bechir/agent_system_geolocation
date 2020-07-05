@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_29_200122) do
+ActiveRecord::Schema.define(version: 2020_07_03_121637) do
+
+  create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.decimal "lat", precision: 10
+    t.decimal "lng", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "masteragents_id"
+    t.index ["masteragents_id"], name: "index_agents_on_masteragents_id"
+  end
 
   create_table "masteragents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -20,4 +30,5 @@ ActiveRecord::Schema.define(version: 2020_06_29_200122) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "agents", "masteragents", column: "masteragents_id"
 end
