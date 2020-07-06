@@ -1,6 +1,6 @@
 
 <%= form_with(model: [@masteragent, @agent], local: true, html: { class: "wizard-big", id: "form" }) do |form| %>
-  <% if agent.errors.any? %>
+  <% if @agent.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(agent.errors.count, "error") %> prohibited this agent from being saved:</h2>
 

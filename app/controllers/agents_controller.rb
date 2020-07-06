@@ -20,16 +20,25 @@ class AgentsController < ApplicationController
 
   # GET /agents/1/edit
   def edit
+    @masteragent = Masteragent.find(params["masteragent_id"])
+    @agent = @masteragent.agents.find(params["id"])
+    puts"***************"
+    puts @agent.name
+    puts"***************"
   end
 
   # POST /agents
   # POST /agents.json
   def create
-    @agent = Agent.new(agent_params)
-
+    #@agent = Agent.new(agent_params)
+    @masteragent = Masteragent.find(params["masteragent_id"])
+    @agent = @masteragent.agents.build(agent_params)
+    puts "***************"
+    puts @agent.masteragent_id
+    puts "***************"
     respond_to do |format|
       if @agent.save
-        format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
+        format.html { redirect_to masteragent_agent_path: @agent, notice: 'Agent was successfully created.' }
         format.json { render :show, status: :created, location: @agent }
       else
         format.html { render :new }
@@ -43,7 +52,7 @@ class AgentsController < ApplicationController
   def update
     respond_to do |format|
       if @agent.update(agent_params)
-        format.html { redirect_to @agent, notice: 'Agent was successfully updated.' }
+        format.html { redirect_to masteragent_agent_path: @agent, notice: 'Agent was successfully updated.' }
         format.json { render :show, status: :ok, location: @agent }
       else
         format.html { render :edit }
@@ -71,6 +80,6 @@ class AgentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def agent_params
       #params.fetch(:agent, {})
-      params.require(:agent).permit(:name)
+      params.require(:agent).permit(:name, :masteragent_id)
     end
 end

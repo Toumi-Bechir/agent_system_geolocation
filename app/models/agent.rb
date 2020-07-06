@@ -1,3 +1,3 @@
 class Agent < ApplicationRecord
-  belongs_to :masteragents
+  belongs_to :masteragent
 end

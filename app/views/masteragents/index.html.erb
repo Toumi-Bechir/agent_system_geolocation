@@ -12,7 +12,7 @@
   <tbody>
     <% @masteragents.each do |masteragent| %>
       <tr>
-        <td><h3><%= masteragent.name %></h3></td>
+        <td><%= link_to masteragent.name, masteragent_agents_path(masteragent) %></td>
         <td><%= link_to 'Show', masteragent %></td>
         <td><%= link_to 'Edit', edit_masteragent_path(masteragent) %></td>
         <td><%= link_to 'Destroy', masteragent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
