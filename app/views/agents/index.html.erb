@@ -12,10 +12,10 @@
   <tbody>
     <% @agents.each do |agent| %>
       <tr>
-        <td><%= agent.name %></td>
+        <td><%= link_to agent.name, masteragent_agent_subagents_path(agent.masteragent_id ,agent.id) %></td>
         <td><%= link_to 'Show', masteragent_agent_path(agent.masteragent_id ,agent.id) %></td>
         <td><%= link_to 'Edit', edit_masteragent_agent_path(agent.masteragent_id ,agent.id) %></td>
-        
+
       </tr>
     <% end %>
   </tbody>

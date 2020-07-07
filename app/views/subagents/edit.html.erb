@@ -1,0 +1,6 @@
+<h1>Editing Subagent</h1>
+
+<%= render 'form', subagent: @subagent %>
+
+<%= link_to 'Show', masteragent_agent_subagent_path(@masteragent, @agent, @subagent) %> |
+<%= link_to 'Back', masteragent_agent_subagents_path(@masteragent, @agent) %>

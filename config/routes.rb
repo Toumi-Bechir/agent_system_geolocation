@@ -1,7 +1,10 @@
 Myapp::Application.routes.draw do
 
+
   resources :masteragents do
-    resources :agents
+    resources :agents do
+      resources :subagents
+    end
   end
   # You can have the root of your site routed with "root"
   root to: 'dashboards#dashboard_1'

@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Subagents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subagents.each do |subagent| %>
+      <tr>
+        <td><h2><%= subagent.name %></h2></td>
+        <td><%= link_to 'Show', masteragent_agent_subagent_path(@masteragent, @agent, subagent) %></td>
+        <td><%= link_to 'Edit', edit_masteragent_agent_subagent_path(@masteragent, @agent, subagent) %></td>
+        <td><%= link_to 'Destroy', [@masteragent, @agent, subagent], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Subagent', new_masteragent_agent_subagent_path %>

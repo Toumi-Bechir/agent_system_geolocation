@@ -33,9 +33,6 @@ class AgentsController < ApplicationController
     #@agent = Agent.new(agent_params)
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.build(agent_params)
-    puts "***************"
-    puts @agent.masteragent_id
-    puts "***************"
     respond_to do |format|
       if @agent.save
         format.html { redirect_to masteragent_agent_path: @agent, notice: 'Agent was successfully created.' }
