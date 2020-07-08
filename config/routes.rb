@@ -1,9 +1,12 @@
 Myapp::Application.routes.draw do
 
 
+  resources :shops
   resources :masteragents do
     resources :agents do
-      resources :subagents
+      resources :subagents do
+        resources :shops
+      end
     end
   end
   # You can have the root of your site routed with "root"

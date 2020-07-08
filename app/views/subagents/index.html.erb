@@ -12,7 +12,7 @@
   <tbody>
     <% @subagents.each do |subagent| %>
       <tr>
-        <td><h2><%= subagent.name %></h2></td>
+        <td><h2><%= link_to subagent.name,  masteragent_agent_subagent_shops_path(@masteragent, @agent, subagent)%></h2></td>
         <td><%= link_to 'Show', masteragent_agent_subagent_path(@masteragent, @agent, subagent) %></td>
         <td><%= link_to 'Edit', edit_masteragent_agent_subagent_path(@masteragent, @agent, subagent) %></td>
         <td><%= link_to 'Destroy', [@masteragent, @agent, subagent], method: :delete, data: { confirm: 'Are you sure?' } %></td>

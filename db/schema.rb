@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_085334) do
+ActiveRecord::Schema.define(version: 2020_07_07_151737) do
 
   create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -30,16 +30,27 @@ ActiveRecord::Schema.define(version: 2020_07_06_085334) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.decimal "lat", precision: 10
+    t.decimal "lng", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "subagent_id"
+    t.index ["subagent_id"], name: "index_shops_on_subagent_id"
+  end
+
   create_table "subagents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.decimal "lat", precision: 10
     t.decimal "lng", precision: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "agents_id"
+    t.bigint "agent_id"
     t.index ["agent_id"], name: "index_subagents_on_agents_id"
   end
 
   add_foreign_key "agents", "masteragents"
-  add_foreign_key "subagents", "agents", column: "agents_id"
+  add_foreign_key "shops", "subagents"
+  add_foreign_key "subagents", "agents"
 end
