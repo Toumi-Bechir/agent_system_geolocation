@@ -5,7 +5,12 @@ Myapp::Application.routes.draw do
   resources :masteragents do
     resources :agents do
       resources :subagents do
-        resources :shops
+        resources :shops ,only: [:show, :edit, :update, :destroy,:new,:create, :index] do
+          member do
+            post :position_update
+
+          end
+        end
       end
     end
   end

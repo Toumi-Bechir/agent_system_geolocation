@@ -3,6 +3,16 @@ class ShopsController < ApplicationController
 
   # GET /shops
   # GET /shops.json
+  def position_update
+    puts "********LAT*********"
+    puts params["lat"]
+    puts "********hit*********"
+    puts params
+    puts "********hit*********"
+    Shop.where(:id => params["id"]).update(lat: params["lat"], lng: params["lng"])
+      return render json: { random_param_name: params["id"]}
+  end
+
   def index
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
