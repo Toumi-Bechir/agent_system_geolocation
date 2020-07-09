@@ -23,10 +23,15 @@ class ShopsController < ApplicationController
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
     @shops = Shop.all
-    @positions = Shop.select(:lat, :lng).where(:subagent_id => params["subagent_id"])
+    @positions = Shop.select(:lat, :lng, :name).where(:subagent_id => params["subagent_id"])
     @hash = Gmaps4rails.build_markers(@positions) do |position, marker|
       marker.lat  position.lat
       marker.lng  position.lng
+      marker.title position.name
+      #marker.json({ name: position.name })
+      marker.infowindow render_to_string(:partial => "info",
+              :locals => {:name => position.name })
+
     end
     puts "********get_positions*********"
     puts @hash
