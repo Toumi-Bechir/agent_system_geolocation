@@ -1,23 +1,36 @@
 class ShopsController < ApplicationController
   before_action :set_shop, only: [:show, :edit, :update, :destroy]
 
-  # GET /shops
-  # GET /shops.json
-  def position_update
-    puts "********LAT*********"
-    puts params["lat"]
-    puts "********hit*********"
-    puts params
-    puts "********hit*********"
-    Shop.where(:id => params["id"]).update(lat: params["lat"], lng: params["lng"])
-      return render json: { random_param_name: params["id"]}
+  def get_positions
+    @positions = Shop.select(:lat, :lng).where(:subagent_id => params["subagent_id"])
+
+    @hash = Gmaps4rails.build_markers(@positions) do |position, marker|
+      marker.lat position.lat
+      marker.lng position.lng
+    end
+
+    return render json: { data: @hash}
   end
 
+  def position_update
+    Shop.where(:id => params["id"]).update(lat: params["lat"], lng: params["lng"])
+      return { random_param_name: params["id"]}
+  end
+  # GET /shops
+  # GET /shops.json
   def index
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
     @shops = Shop.all
+    @positions = Shop.select(:lat, :lng).where(:subagent_id => params["subagent_id"])
+    @hash = Gmaps4rails.build_markers(@positions) do |position, marker|
+      marker.lat  position.lat
+      marker.lng  position.lng
+    end
+    puts "********get_positions*********"
+    puts @hash
+    puts "********get_positions*********"
   end
 
   # GET /shops/1

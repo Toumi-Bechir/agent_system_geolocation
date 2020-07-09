@@ -6,6 +6,9 @@ Myapp::Application.routes.draw do
     resources :agents do
       resources :subagents do
         resources :shops ,only: [:show, :edit, :update, :destroy,:new,:create, :index] do
+          collection do
+            post 'get_positions'
+          end
           member do
             post :position_update
 

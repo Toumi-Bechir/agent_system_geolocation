@@ -22,5 +22,38 @@
 </table>
 
 <br>
-
 <%= link_to 'New Shop', new_masteragent_agent_subagent_shop_path %>
+<br>
+
+<div style='width: 800px;'>
+  <div id="multi_markers" style='width: 800px; height: 400px;'></div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  var handler = Gmaps.build('Google');
+handler.buildMap({ internal: {id: 'multi_markers'}}, function(){
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  var pathArray = window.location.pathname;
+  //alert(pathArray+'/get_positions');
+  alert(<%=raw @hash.to_json %>);
+//  $.ajax({
+//      url: pathArray+'/get_positions',
+//        type: "POST",
+//        dataType: "json",
+        //data: {lat : plat, lng : plng},
+//        success: function(data) {
+//            if (data == "OK")
+//          {alert("hello  url   : ");}
+//  }})
+
+
+  var markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+});
+</script>
