@@ -4,7 +4,28 @@ class MasteragentsController < ApplicationController
   # GET /masteragents
   # GET /masteragents.json
   def index
+    @position = []
+    @pcount = 0
     @masteragents = Masteragent.all
+    @masteragents.each do |master|
+      master.agents.each do |agent|
+        agent.subagents.each do |subagent|
+          subagent.shops.each do |shop|
+            @position[@pcount]= shop
+            @pcount+=1
+          end
+        end
+      end
+    end
+    @hash = Gmaps4rails.build_markers(@position) do |position, marker|
+      marker.lat  position.lat
+      marker.lng  position.lng
+      marker.title position.name
+      #marker.json({ name: position.name })
+      marker.infowindow render_to_string(:partial => "info",
+              :locals => {:name => position.name })
+
+    end
   end
 
   # GET /masteragents/1

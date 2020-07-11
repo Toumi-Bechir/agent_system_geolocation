@@ -4,7 +4,7 @@ class AgentsController < ApplicationController
   # GET /agents
   # GET /agents.json
   def index
-    @agents = Agent.all
+    @agents = Agent.all.where(masteragent_id: params["masteragent_id"])
   end
 
   # GET /agents/1

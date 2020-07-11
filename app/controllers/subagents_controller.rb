@@ -6,7 +6,7 @@ class SubagentsController < ApplicationController
   def index
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
-    @subagents = Subagent.all
+    @subagents = Subagent.all.where(agent_id: params["agent_id"])
   end
 
   # GET /subagents/1
