@@ -5,6 +5,15 @@ class AgentsController < ApplicationController
   # GET /agents.json
   def index
     @agents = Agent.all.where(masteragent_id: params["masteragent_id"])
+    @position = Shop.joins(subagent: [agent:[:masteragent]]).where(masteragents: {id: params["masteragent_id"]})
+    @hash = Gmaps4rails.build_markers(@position) do |position, marker|
+      marker.lat  position.lat
+      marker.lng  position.lng
+      marker.title position.name
+      marker.infowindow render_to_string(:partial => "info",
+              :locals => {:name => position.name })
+
+    end
   end
 
   # GET /agents/1
@@ -22,9 +31,6 @@ class AgentsController < ApplicationController
   def edit
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["id"])
-    puts"***************"
-    puts @agent.name
-    puts"***************"
   end
 
   # POST /agents
