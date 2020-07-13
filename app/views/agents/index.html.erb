@@ -32,7 +32,7 @@
         <h2>Localisation</h2>
         <ol class="breadcrumb">
             <li>
-                <strong><a href="<%= url_for :controller => 'dashboards', :action => 'dashboard_1' %>">Tout les Masters</a></strong>
+                <strong><a href="<%= url_for :controller => 'dashboards', :action => 'dashboard_1' %>"><%= @masteragent.name %></a></strong>
         </li>
         <li>
             <a>Shops</a>
@@ -61,7 +61,7 @@
                       <li class="dd-item" data-id="1">
                           <% @agents.each do |agent| %>
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= link_to agent.name, masteragent_agent_subagents_path(agent.masteragent_id ,agent.id) %>
+                              <span class="label label-info"><i class="fa fa fa-users"></i></span> <%= link_to agent.name, masteragent_agent_subagents_path(agent.masteragent_id ,agent.id) %>
                               <%= link_to 'Details', masteragent_agent_path(agent.masteragent_id ,agent.id), class:"btn btn-outline btn-success pull-right" %>
                                 <div class="pull-right" style="">
 

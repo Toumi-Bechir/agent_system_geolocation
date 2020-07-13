@@ -33,9 +33,6 @@ class ShopsController < ApplicationController
               :locals => {:name => position.name })
 
     end
-    puts "********get_positions*********"
-    puts @hash
-    puts "********get_positions*********"
   end
 
   # GET /shops/1

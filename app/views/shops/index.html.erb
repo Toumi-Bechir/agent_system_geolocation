@@ -1,32 +1,82 @@
 <p id="notice"><%= notice %></p>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Localisation</h2>
+        <ol class="breadcrumb">
+            <li>
+                <strong><a href="<%= url_for :controller => 'dashboards', :action => 'dashboard_1' %>"><%= @masteragent.name %></a></strong>
+        </li>
+        <li>
+            <a><%= @agent.name %></a>
+        </li>
+        <li>
+            <a><%= @subagents.name %></a>
+        </li>
+        <li>
+            <a>Shops</a>
+        </li>
+        <li class="active">
+            <strong>Localisation</strong>
+        </li>
+    </ol>
+</div>
+<div class="col-lg-2">
 
-<h1>Shops</h1>
+</div>
+        </div>
+<div class="wrapper wrapper-content  animated fadeInRight">
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="row">
 
-  <tbody>
-    <% @shops.each do |shop| %>
-      <tr>
-        <td><h2><%= shop.name %></h2></td>
-        <td><%= link_to 'Show', masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>|</td>
-        <td><%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>|</td>
-        <td><%= link_to 'Destroy',  [@subagent, shop], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="col-lg-6">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Structure</h5>
+            </div>
+            <div class="ibox-content">
+              <div class="dd" id="nestable2">
+                  <ol class="dd-list">
+                      <li class="dd-item" data-id="1">
+                          <% @shops.each do |shop| %>
+                          <div class="dd-handle">
+                              <span class="label label-info"><i class="fa fa-cog"></i></span> <%= link_to shop.name, masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>
+                              <%= link_to 'Details',  masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class:"btn btn-outline btn-success pull-right" %>
 
-<br>
-<%= link_to 'New Shop', new_masteragent_agent_subagent_shop_path %>
-<br>
+                              <%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class: "btn btn-outline btn-warning pull-right" %>
+                          </div>
+                          <% end %>
+                      </li>
 
-<div style='width: 800px;'>
-  <div id="multi_markers" style='width: 800px; height: 400px;'></div>
+
+                  </ol>
+              </div>
+
+
+
+
+                <div class="m-t-md">
+                    <%= link_to 'New Masteragent', new_masteragent_agent_subagent_shop_path, class: "btn btn-block btn-outline btn-primary" %>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+<!-------google maps----------------------google maps---------------google maps----------------->
+    <div class="col-md-6">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Custom theme 2</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="google-map" id="map4"></div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 
@@ -34,23 +84,7 @@
 
 <script type="text/javascript">
   var handler = Gmaps.build('Google');
-handler.buildMap({ internal: {id: 'multi_markers'}}, function(){
-
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  var pathArray = window.location.pathname;
-  //alert(pathArray+'/get_positions');
-  //alert(<%=raw @hash.to_json %>);
-//  $.ajax({
-//      url: pathArray+'/get_positions',
-//        type: "POST",
-//        dataType: "json",
-        //data: {lat : plat, lng : plng},
-//        success: function(data) {
-//            if (data == "OK")
-//          {alert("hello  url   : ");}
-//  }})
-
+handler.buildMap({ internal: {id: 'map4'}}, function(){
 
   var markers = handler.addMarkers(<%=raw @hash.to_json %>);
   handler.bounds.extendWith(markers);
