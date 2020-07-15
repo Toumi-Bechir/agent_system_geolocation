@@ -1,22 +1,79 @@
 <p id="notice"><%= notice %></p>
 <h2><%= @shop.name %></h2>
-<%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, @shop.subagent_id, @shop) %> |
-<%= link_to 'Back', masteragent_agent_subagent_shops_path(@masteragent, @agent, @shop.subagent_id) %>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2><%= link_to 'BT', masteragents_path %></h2>
+        <ol class="breadcrumb">
+          <li>
+              <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
+        </li>
+            <li>
+                <strong><%= link_to @masteragent.name, masteragent_agents_path(@masteragent.id) %></strong>
+        </li>
+        <li>
+            <a><%= link_to @agent.name, masteragent_agent_subagents_path(@masteragent.id, @agent.id) %></a>
+        </li>
+        <li>
+            <a><%= link_to @subagents.name, masteragent_agent_subagent_shops_path(@masteragent.id, @agent.id, @subagents.id) %></a>
+        </li>
 
-
-
-
-
-
-<div style='width: 800px;'>
-  <div id="geolocation" style='width: 800px; height: 400px;'></div>
+        <li class="active">
+            <strong>Localisation</strong>
+        </li>
+    </ol>
 </div>
-<button onclick="updateposition()">Confirmer La Position</button>
+
+
+<div class="col-lg-2">
+
+</div>
+        </div>
+
+        <div class="col-md-12">
+                <div class="widget lazur-bg p-xl">
+
+                    <h2>
+                        <%= @shop.name %>
+                    </h2>
+                    <ul class="list-unstyled m-t-md">
+                        <li>
+                            <span class="fa fa-envelope m-r-xs"></span>
+                            <label>Email:</label>
+                            mike@mail.com
+                        </li>
+                        <li>
+                            <span class="fa fa-home m-r-xs"></span>
+                            <label>Address:</label>
+                            Street 200, Avenue 10
+                        </li>
+                        <li>
+                            <span class="fa fa-phone m-r-xs"></span>
+                            <label>Contact:</label>
+                            (+121) 678 3462
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+<div class="col-md-12">
+    <div class="ibox ">
+        <div class="ibox-title">
+          <%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, @shop.subagent_id, @shop) %> |
+          <%= link_to 'Back', masteragent_agent_subagent_shops_path(@masteragent, @agent, @shop.subagent_id) %>
+        </div>
+
+        <div class="ibox-content">
+            <div class="google-map" id="map4"></div>
+        </div>
+    </div>
+    <button onclick="updateposition()">Confirmer La Position</button>
+</div>
+
 
   <script type="text/javascript">
 var plat = 0;
     var handler = Gmaps.build('Google');
-handler.buildMap({ internal: {id: 'geolocation'} }, function(){
+handler.buildMap({ internal: {id: 'map4'} }, function(){
   // be aware chrome >= 50 requires https for geolocation to work
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition(displayOnMap);

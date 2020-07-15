@@ -1,38 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Agents</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @agents.each do |agent| %>
-      <tr>
-        <td><%= link_to agent.name, masteragent_agent_subagents_path(agent.masteragent_id ,agent.id) %></td>
-        <td><%= link_to 'Show', masteragent_agent_path(agent.masteragent_id ,agent.id) %></td>
-        <td><%= link_to 'Edit', edit_masteragent_agent_path(agent.masteragent_id ,agent.id) %></td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Agent', new_masteragent_agent_path %>
-
-
-
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
+      <h2><%= link_to 'BT', masteragents_path %></h2>
         <h2>Localisation</h2>
         <ol class="breadcrumb">
+          <li>
+              <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
+        </li>
             <li>
-                <strong><a href="<%= url_for :controller => 'dashboards', :action => 'dashboard_1' %>"><%= @masteragent.name %></a></strong>
+                <strong><%= link_to @masteragent.name, masteragent_agents_path(@masteragent.id) %></strong>
         </li>
         <li>
             <a>Shops</a>
@@ -53,7 +30,7 @@
     <div class="col-lg-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Structure</h5>
+                <h5>Agents</h5>
             </div>
             <div class="ibox-content">
               <div class="dd" id="nestable2">
@@ -74,67 +51,8 @@
 
                   </ol>
               </div>
-
-
-cngvn*******Vestibulum commodo
-                <div class="dd" id="nestable2">
-                    <ol class="dd-list">
-                        <li class="dd-item" data-id="1">
-                            <div class="dd-handle">
-                                <span class="label label-info"><i class="fa fa-users"></i></span> Cras ornare tristique.
-                            </div>
-                            <ol class="dd-list">
-                                <li class="dd-item" data-id="2">
-                                    <div class="dd-handle">
-                                        <span class="pull-right"> 12:00 pm </span>
-                                        <span class="label label-info"><i class="fa fa-cog"></i></span> Vivamus vestibulum nulla nec ante.
-                                    </div>
-                                </li>
-                                <li class="dd-item" data-id="3">
-                                    <div class="dd-handle">
-                                        <span class="pull-right"> 11:00 pm </span>
-                                        <span class="label label-info"><i class="fa fa-bolt"></i></span> Nunc dignissim risus id metus.
-                                    </div>
-                                </li>
-                                <li class="dd-item" data-id="4">
-                                    <div class="dd-handle">
-                                        <span class="pull-right"> 11:00 pm </span>
-                                        <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
-                                    </div>
-                                </li>
-                            </ol>
-                        </li>
-
-                        <li class="dd-item" data-id="5">
-                            <div class="dd-handle">
-                                <span class="label label-warning"><i class="fa fa-users"></i></span> Integer vitae libero.
-                            </div>
-                            <ol class="dd-list">
-                                <li class="dd-item" data-id="6">
-                                    <div class="dd-handle">
-                                        <span class="pull-right"> 15:00 pm </span>
-                                        <span class="label label-warning"><i class="fa fa-users"></i></span> Nam convallis pellentesque nisl.
-                                    </div>
-                                </li>
-                                <li class="dd-item" data-id="7">
-                                    <div class="dd-handle">
-                                        <span class="pull-right"> 16:00 pm </span>
-                                        <span class="label label-warning"><i class="fa fa-bomb"></i></span> Vivamus molestie gravida turpis
-                                    </div>
-                                </li>
-                                <li class="dd-item" data-id="8">
-                                    <div class="dd-handle">
-                                        <span class="pull-right"> 21:00 pm </span>
-                                        <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
-                                    </div>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
-                </div>
-
-                <div class="m-t-md">
-                    <h5>Serialised Output</h5>
+              <div class="m-t-md">
+                  <%= link_to 'Ajouter Agent', new_masteragent_agent_path, class: "btn btn-block btn-outline btn-primary" %>
                 </div>
 
 

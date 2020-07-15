@@ -1,13 +1,17 @@
 <p id="notice"><%= notice %></p>
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
+      <h2><%= link_to 'BT', masteragents_path %></h2>
         <h2>Localisation</h2>
         <ol class="breadcrumb">
+          <li>
+              <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
+        </li>
             <li>
-                <strong><a href="<%= url_for :controller => 'dashboards', :action => 'dashboard_1' %>"><%= @masteragent.name %></a></strong>
+                <strong><%= link_to @masteragent.name, masteragent_agents_path(@masteragent.id) %></strong>
         </li>
         <li>
-            <a><%= @agent.name %></a>
+            <a><%= link_to @agent.name, masteragent_agent_subagents_path(@agent.masteragent_id ,@agent.id) %></a>
         </li>
         <li>
             <a><%= @subagents.name %></a>
@@ -31,7 +35,7 @@
     <div class="col-lg-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Structure</h5>
+                <h5>Shops</h5>
             </div>
             <div class="ibox-content">
               <div class="dd" id="nestable2">
@@ -39,7 +43,7 @@
                       <li class="dd-item" data-id="1">
                           <% @shops.each do |shop| %>
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa-cog"></i></span> <%= link_to shop.name, masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>
+                              <span class="label label-info"><i class="fa fa-exchange"></i></span> <%= link_to shop.name, masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>
                               <%= link_to 'Details',  masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class:"btn btn-outline btn-success pull-right" %>
 
                               <%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class: "btn btn-outline btn-warning pull-right" %>
@@ -55,7 +59,7 @@
 
 
                 <div class="m-t-md">
-                    <%= link_to 'New Masteragent', new_masteragent_agent_subagent_shop_path, class: "btn btn-block btn-outline btn-primary" %>
+                    <%= link_to 'Ajouter Shop', new_masteragent_agent_subagent_shop_path, class: "btn btn-block btn-outline btn-primary" %>
                 </div>
 
 

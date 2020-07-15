@@ -4,10 +4,11 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
+      <h2><%= link_to 'BT', masteragents_path %></h2>
         <h2>Localisation</h2>
         <ol class="breadcrumb">
             <li>
-                <strong><a href="<%= url_for :controller => 'dashboards', :action => 'dashboard_1' %>">Tout les Masters</a></strong>
+                <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
         </li>
         <li>
             <a>Shops</a>
@@ -28,7 +29,7 @@
     <div class="col-lg-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Structure</h5>
+                <h5>Master Agents</h5>
             </div>
             <div class="ibox-content">
               <div class="dd" id="nestable2">
@@ -52,7 +53,7 @@
 
 
                 <div class="m-t-md">
-                    <%= link_to 'New Masteragent', new_masteragent_path, class: "btn btn-block btn-outline btn-primary" %>
+                    <%= link_to 'Ajouter Master Agent', new_masteragent_path, class: "btn btn-block btn-outline btn-primary" %>
                 </div>
 
 
