@@ -1,6 +1,15 @@
 Myapp::Application.routes.draw do
+  Devise.setup do |config|
+    # The default HTTP method used to sign out a resource. Default is :delete.
+    config.sign_out_via = :get
+  end
 
-
+  devise_for :users do
+    delete '/users/sign_out' => 'devise/sessions#destroy'
+  end
+  #devise_scope :users do
+  #  get '/users/sign_out' => 'devise/sessions#destroy'
+  #end
   resources :shops
   resources :masteragents do
     resources :agents do
@@ -18,7 +27,11 @@ Myapp::Application.routes.draw do
     end
   end
   # You can have the root of your site routed with "root"
-  root to: 'dashboards#dashboard_1'
+  #root to: 'dashboards#dashboard_1'
+  authenticated :user do
+    root :to => "masteragents#index"
+  end
+  root :to => redirect("/users/sign_in")
 
   # All routes
   get "dashboards/dashboard_1"
