@@ -1,5 +1,6 @@
 class ShopsController < ApplicationController
   before_action :set_shop, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :edit, :update, :destroy]
 
   def get_positions
     @positions = Shop.select(:lat, :lng).where(:subagent_id => params["subagent_id"])
@@ -33,6 +34,7 @@ class ShopsController < ApplicationController
               :locals => {:name => position.name })
 
     end
+
   end
 
   # GET /shops/1
@@ -42,6 +44,7 @@ class ShopsController < ApplicationController
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
     @shop = Shop.find(params["id"])
+    #render :layout => "layout_4"
   end
 
   # GET /shops/new

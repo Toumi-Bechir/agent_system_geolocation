@@ -1,9 +1,11 @@
 class MasteragentsController < ApplicationController
   before_action :set_masteragent, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /masteragents
   # GET /masteragents.json
   def index
+
     @position = []
     @pcount = 0
     @masteragents = Masteragent.all

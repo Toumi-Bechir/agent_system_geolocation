@@ -4,9 +4,11 @@ Myapp::Application.routes.draw do
     config.sign_out_via = :get
   end
 
-  devise_for :users do
-    delete '/users/sign_out' => 'devise/sessions#destroy'
-  end
+  #get '/pages/login', to: 'sessions#new', foo: 'bar'
+
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
   #devise_scope :users do
   #  get '/users/sign_out' => 'devise/sessions#destroy'
   #end

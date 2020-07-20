@@ -1,26 +1,26 @@
-<h2>Log in</h2>
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+                <h1 class="logo-name">IN+</h1>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+            </div>
+            <h3>Welcome to BT Geolocation App</h3>
+            <!--<p>
+                Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+            </p>-->
+            <p>Login in. To see it in action.</p>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="form-group">
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", placeholder: "E-Mail" %>
+                </div>
+                <div class="form-group">
+                    <%= f.password_field :password, autocomplete: "current-password", class:"form-control", placeholder: "Password"  %>
+                </div>
+                <%= f.submit "Log in", class: "btn btn-primary block full-width m-b" %>
+                <%= render "users/shared/links" %>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+            <% end %>
+            <!--<p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2015</small> </p>-->
+        </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>

@@ -1,5 +1,6 @@
 class SubagentsController < ApplicationController
   before_action :set_subagent, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /subagents
   # GET /subagents.json
