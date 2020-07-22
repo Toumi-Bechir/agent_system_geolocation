@@ -31,7 +31,7 @@ class ShopsController < ApplicationController
       marker.title position.name
       #marker.json({ name: position.name })
       marker.infowindow render_to_string(:partial => "info",
-              :locals => {:name => position.name })
+              :locals => {:name => position.name, :lat => position.lat, :lng => position.lng})
 
     end
 
