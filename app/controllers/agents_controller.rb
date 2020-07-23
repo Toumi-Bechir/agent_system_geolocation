@@ -13,7 +13,7 @@ class AgentsController < ApplicationController
       marker.lng  position.lng
       marker.title position.name
       marker.infowindow render_to_string(:partial => "info",
-              :locals => {:name => position.name })
+              :locals => {:name => position.name, :lat => position.lat, :lng => position.lng })
 
     end
   end
