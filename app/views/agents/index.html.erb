@@ -36,21 +36,28 @@
               <div class="dd" id="nestable2">
                   <ol class="dd-list">
                       <li class="dd-item" data-id="1">
-                          <% @agents.each do |agent| %>
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa fa-users"></i></span> <%= link_to agent.name, masteragent_agent_subagents_path(agent.masteragent_id ,agent.id) %>
-                              <%= link_to 'Details', masteragent_agent_path(agent.masteragent_id ,agent.id), class:"btn btn-outline btn-success pull-right" %>
-                                <div class="pull-right" style="">
-
-                                </div>
-                              <%= link_to 'Edit', edit_masteragent_agent_path(agent.masteragent_id ,agent.id), class: "btn btn-outline btn-warning pull-right" %>
+                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= @masteragent.name %>
                           </div>
-                          <% end %>
+                          <ol class="dd-list">
+                            <li class="dd-item" data-id="1">
+                                <% @agents.each do |agent| %>
+                                <div class="dd-handle">
+                                    <span class="label label-info"><i class="fa fa fa-users"></i></span> <%= link_to agent.name, masteragent_agent_subagents_path(agent.masteragent_id ,agent.id) %>
+                                    <%= link_to 'Details', masteragent_agent_path(agent.masteragent_id ,agent.id), class:"btn btn-outline btn-success pull-right" %>
+                                      <div class="pull-right" style="">
+
+                                      </div>
+                                    <%= link_to 'Edit', edit_masteragent_agent_path(agent.masteragent_id ,agent.id), class: "btn btn-outline btn-warning pull-right" %>
+                                </div>
+                                <% end %>
+
+                            </li>
+                          </ol>
                       </li>
-
-
-                  </ol>
+                    </ol>
               </div>
+
               <div class="m-t-md">
                   <%= link_to 'Ajouter Agent', new_masteragent_agent_path, class: "btn btn-block btn-outline btn-primary" %>
                 </div>
@@ -66,7 +73,7 @@
     <div class="col-md-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Custom theme 2</h5>
+                <h5>Geolocations</h5>
             </div>
             <div class="ibox-content">
                 <div class="google-map" id="map4"></div>

@@ -41,24 +41,41 @@
               <div class="dd" id="nestable2">
                   <ol class="dd-list">
                       <li class="dd-item" data-id="1">
-                          <% @shops.each do |shop| %>
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa-exchange"></i></span> <%= link_to shop.name, masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>
-                              <%= link_to 'Details',  masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class:"btn btn-outline btn-success pull-right" %>
-
-                              <%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class: "btn btn-outline btn-warning pull-right" %>
+                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= @masteragent.name %>
                           </div>
-                          <% end %>
+                          <ol class="dd-list">
+                              <li class="dd-item" data-id="2">
+                                  <div class="dd-handle">
+                                      <span class="label label-info"><i class="fa fa-users"></i></span> <%= @agent.name %>
+                                  </div>
+                                  <ol class="dd-list">
+                                      <li class="dd-item" data-id="2">
+                                          <div class="dd-handle">
+                                              <span class="label label-info"><i class="fa fa-users"></i></span> <%= @subagents.name %>
+                                          </div>
+                                          <ol class="dd-list">
+                                              <li class="dd-item" data-id="1">
+                                                  <% @shops.each do |shop| %>
+                                                  <div class="dd-handle">
+                                                      <span class="label label-info"><i class="fa fa-exchange"></i></span> <%= link_to shop.name, masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop) %>
+                                                      <%= link_to 'Details',  masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class:"btn btn-outline btn-success pull-right" %>
+
+                                                      <%= link_to 'Edit', edit_masteragent_agent_subagent_shop_path(@masteragent, @agent, shop.subagent_id, shop), class: "btn btn-outline btn-warning pull-right" %>
+                                                  </div>
+                                                  <% end %>
+                                              </li>
+                                          </ol>
+                                      </li>
+                                  </ol>
+                              </li>
+                          </ol>
                       </li>
-
-
-                  </ol>
+                    </ol>
               </div>
 
 
-
-
-                <div class="m-t-md">
+              <div class="m-t-md">
                     <%= link_to 'Ajouter Shop', new_masteragent_agent_subagent_shop_path, class: "btn btn-block btn-outline btn-primary" %>
                 </div>
 

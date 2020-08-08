@@ -35,27 +35,37 @@
                 <h5>Sous Agents</h5>
             </div>
             <div class="ibox-content">
+
               <div class="dd" id="nestable2">
                   <ol class="dd-list">
                       <li class="dd-item" data-id="1">
-                          <% @subagents.each do |subagents| %>
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa-bullseye"></i></span> <%= link_to subagents.name, masteragent_agent_subagent_shops_path(@masteragent, @agent, subagents) %>
-                              <%= link_to 'Details',  masteragent_agent_subagent_path(@masteragent, @agent, subagents), class:"btn btn-outline btn-success pull-right" %>
-
-                              <%= link_to 'Edit', edit_masteragent_agent_subagent_path(@masteragent, @agent, subagents), class: "btn btn-outline btn-warning pull-right" %>
+                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= @masteragent.name %>
                           </div>
-                          <% end %>
+                          <ol class="dd-list">
+                              <li class="dd-item" data-id="2">
+                                  <div class="dd-handle">
+                                      <span class="label label-info"><i class="fa fa-users"></i></span> <%= @agent.name %>
+                                  </div>
+                                  <ol class="dd-list">
+                                      <li class="dd-item" data-id="1">
+                                          <% @subagents.each do |subagents| %>
+                                          <div class="dd-handle">
+                                              <span class="label label-info"><i class="fa fa-bullseye"></i></span> <%= link_to subagents.name, masteragent_agent_subagent_shops_path(@masteragent, @agent, subagents) %>
+                                              <%= link_to 'Details',  masteragent_agent_subagent_path(@masteragent, @agent, subagents), class:"btn btn-outline btn-success pull-right" %>
+
+                                              <%= link_to 'Edit', edit_masteragent_agent_subagent_path(@masteragent, @agent, subagents), class: "btn btn-outline btn-warning pull-right" %>
+                                          </div>
+                                          <% end %>
+                                      </li>
+                                    <ol>
+                              </li>
+                          </ol>
                       </li>
-
-
                   </ol>
               </div>
 
-
-
-
-                <div class="m-t-md">
+              <div class="m-t-md">
                     <%= link_to 'Ajouter Sous Agent', new_masteragent_agent_subagent_path, class: "btn btn-block btn-outline btn-primary" %>
                 </div>
 
@@ -70,7 +80,7 @@
     <div class="col-md-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Custom theme 2</h5>
+                <h5>Geolocations</h5>
             </div>
             <div class="ibox-content">
                 <div class="google-map" id="map4"></div>

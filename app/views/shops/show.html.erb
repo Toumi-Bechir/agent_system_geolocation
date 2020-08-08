@@ -94,12 +94,12 @@ function displayOnMap(position){
 };
 
 function updateposition(){
-  alert("hello"+plat);
+  //alert("hello"+plat);
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   //const product = urlParams.get()
   var pathArray = window.location.pathname;
-  alert(pathArray+'/position_update');
+  //alert(pathArray+'/position_update');
   $.ajax({
       url: pathArray+'/position_update',
         type: "POST",
