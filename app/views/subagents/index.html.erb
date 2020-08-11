@@ -55,6 +55,7 @@
                                               <%= link_to 'Details',  masteragent_agent_subagent_path(@masteragent, @agent, subagents), class:"btn btn-outline btn-success pull-right" %>
 
                                               <%= link_to 'Edit', edit_masteragent_agent_subagent_path(@masteragent, @agent, subagents), class: "btn btn-outline btn-warning pull-right" %>
+                                              <%= link_to 'Account', new_user_session_path(subagents.id), class: "btn btn-outline btn-primary pull-right" %>
                                           </div>
                                           <% end %>
                                       </li>

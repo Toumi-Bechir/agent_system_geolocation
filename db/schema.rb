@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_102806) do
+ActiveRecord::Schema.define(version: 2020_08_10_134424) do
 
   create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,12 @@ ActiveRecord::Schema.define(version: 2020_07_16_102806) do
     t.string "name"
     t.decimal "lat", precision: 10
     t.decimal "lng", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,11 +69,15 @@ ActiveRecord::Schema.define(version: 2020_07_16_102806) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "role_id"
+    t.integer "struct_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "agents", "masteragents"
   add_foreign_key "shops", "subagents"
   add_foreign_key "subagents", "agents"
+  add_foreign_key "users", "roles"
 end
