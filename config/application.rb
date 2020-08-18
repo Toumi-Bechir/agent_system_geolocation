@@ -26,7 +26,7 @@ module Myapp
     config.assets.precompile += [ 'appviews.js', 'cssanimations.js', 'dashboards.js', 'forms.js', 'gallery.js', 'graphs.js', 'mailbox.js', 'miscellaneous.js', 'pages.js', 'tables.js', 'uielements.js', 'widgets.js', 'commerce.js', 'metrics.js', 'landing.js' ]
     config.to_prepare do
     # Configure single controller layout
-    #Devise::SessionsController.layout "empty"
+    Devise::SessionsController.layout "empty"
     #Devise::RegistrationsController.layout "layout_2"
     end
   end

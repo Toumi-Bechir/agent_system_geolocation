@@ -7,15 +7,25 @@ Myapp::Application.routes.draw do
   #get '/pages/login', to: 'sessions#new', foo: 'bar'
 
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
   #devise_scope :users do
   #  get '/users/sign_out' => 'devise/sessions#destroy'
   #end
+  resources :structacess do
+    member do
+      match :createauth, to: :assign, via: [:post, :patch]
+    end
+  end
   resources :shops
   resources :masteragents do
     resources :agents do
       resources :subagents do
+        member do
+          get :newauth
+          match :createauth, to: :assign, via: [:post, :patch]
+        end
         resources :shops ,only: [:show, :edit, :update, :destroy,:new,:create, :index] do
           collection do
             post 'get_positions'

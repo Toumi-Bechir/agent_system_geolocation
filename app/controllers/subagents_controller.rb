@@ -4,7 +4,39 @@ class SubagentsController < ApplicationController
 
   # GET /subagents
   # GET /subagents.json
+  def newauth
+    puts "***************************"
+    puts  params
+    puts "***************************"
+    @user = User.new
+    #redirect_to controller: 'users/registrations', action: 'new'
+  end
+
+  def createauth
+
+    @user = User.new(:email => params["email"], :password => params["password"], :password_confirmation => params["password_confirmation"])
+    @user["role_id"] = 4
+    @user["struct_id"] = params["stid"]
+    puts "***************************"
+    puts  @user.struct_id
+    puts "***************************"
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to masteragent_agent_subagents_path, notice: 'Credentials was successfully created.' }
+        format.json { render :show, status: :created, location: @subagent }
+      else
+        format.html { render :newauth }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def index
+    params[:id] = 22
+    @user = User.new
+    puts "***************************"
+    puts  params
+    puts "***************************"
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = Subagent.all.where(agent_id: params["agent_id"])
@@ -14,7 +46,7 @@ class SubagentsController < ApplicationController
       marker.lng  position.lng
       marker.title position.name
       marker.infowindow render_to_string(:partial => "info",
-              :locals => {:name => position.name, :lat => position.lat, :lng => position.lng })
+              :locals => {:name => position.name, :lat => position.lat, :lng => position.lng, :id => 22})
 
     end
   end
@@ -94,5 +126,9 @@ class SubagentsController < ApplicationController
     def subagent_params
       #params.fetch(:subagent, {})
       params.require(:subagent).permit(:name, :agent_id, :masteragent_id)
+    end
+    def user_params
+      params.require(:user).permit(:email, :password, :id)
+      #devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute, :role_id, :struct_id])
     end
 end
