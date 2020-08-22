@@ -1,7 +1,7 @@
 class ShopsController < ApplicationController
   before_action :set_shop, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:index, :edit, :update, :destroy]
-
+  before_action :redirect_usr
   def get_positions
     @positions = Shop.select(:lat, :lng).where(:subagent_id => params["subagent_id"])
 
@@ -20,10 +20,6 @@ class ShopsController < ApplicationController
   # GET /shops
   # GET /shops.json
   def index
-    puts "***********************************"
-    puts request.path #request.original_url #request.env['REQUEST_URI']
-    puts "***********************************"
-
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
@@ -123,24 +119,48 @@ class ShopsController < ApplicationController
       params.require(:shop).permit(:name, :subagent_id, :agent_id, :masteragent_id)
     end
     def access_managment
+
+
+
       case current_user.role.name
+
       when "subagent"
-        if (current_user.struct_id == params["subagent_id"])
+        @agentid = Subagent.find(current_user.struct_id).agent_id
+        @masterid = Agent.find(@agentid).masteragent_id
+        if current_user.struct_id == params["subagent_id"].to_i && @agentid == params["agent_id"].to_i && @masterid == params["masteragent_id"].to_i
           @result = "ok"
+        else
+          @result = "nok"
+        end
+
+      when "agent"
+
+        current_user.subagent.each do |subagent|
+
         end
 
       when "admin"
+
         @result = "ok"
+
+
       else
         @result = "nok"
       end
+
     end
+
     def redirect_usr
-      if (access_managment == "ok" )
-        puts "***************************"
-        puts  current_user.role.name
-        puts "***************************"
-        redirect_to pages_lockscreen_path
+
+      if access_managment == "ok"
+        puts "****start***********************"
+        puts  "ACCESS GRANTED"
+        puts "****end***********************"
+      else
+        puts "****start***********************"
+        puts  "RESTRICTED AREA REDIRECTED"
+        puts "****end***********************"
+        redirect_to current_user.landing_link #pages_lockscreen_path
       end
     end
 end

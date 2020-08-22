@@ -37,7 +37,7 @@ class SubagentsController < ApplicationController
     params[:id] = 22
     @user = User.new
     puts "***************************"
-    puts  request.path
+    puts  params
     puts "***************************"
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
