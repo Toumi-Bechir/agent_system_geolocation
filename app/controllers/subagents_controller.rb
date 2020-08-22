@@ -1,6 +1,7 @@
 class SubagentsController < ApplicationController
   before_action :set_subagent, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  #before_action :redirect_usr
 
   # GET /subagents
   # GET /subagents.json
@@ -13,16 +14,17 @@ class SubagentsController < ApplicationController
   end
 
   def createauth
-
     @user = User.new(:email => params["email"], :password => params["password"], :password_confirmation => params["password_confirmation"])
     @user["role_id"] = 4
     @user["struct_id"] = params["stid"]
+    @user["landing_link"] = masteragent_agent_subagent_shops_path(params["masteragent_id"],params["agent_id"],params["stid"])
+
     puts "***************************"
-    puts  @user.struct_id
+    puts  masteragent_agent_subagent_shops_path(params["masteragent_id"],params["agent_id"],params["id"])
     puts "***************************"
     respond_to do |format|
       if @user.save
-        format.html { redirect_to masteragent_agent_subagents_path, notice: 'Credentials was successfully created.' }
+        format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.' } #masteragent_agent_subagents_path
         format.json { render :show, status: :created, location: @subagent }
       else
         format.html { render :newauth }
@@ -35,7 +37,7 @@ class SubagentsController < ApplicationController
     params[:id] = 22
     @user = User.new
     puts "***************************"
-    puts  params
+    puts  request.path
     puts "***************************"
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
@@ -130,5 +132,22 @@ class SubagentsController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :id)
       #devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute, :role_id, :struct_id])
+    end
+    def access_managment
+      case current_user.role.name
+      when "subagent"
+        @result = "ok"
+
+      else
+        @result = "nok"
+      end
+    end
+    def redirect_usr
+      if (access_managment == "ok" )
+        puts "***************************"
+        puts  current_user.role.name
+        puts "***************************"
+        redirect_to pages_lockscreen_path
+      end
     end
 end

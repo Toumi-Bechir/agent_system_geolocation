@@ -4,7 +4,28 @@ class AgentsController < ApplicationController
 
   # GET /agents
   # GET /agents.json
+  def createauth
+    @user = User.new(:email => params["email"], :password => params["password"], :password_confirmation => params["password_confirmation"])
+    @user["role_id"] = 3
+    @user["struct_id"] = params["stid"]
+    @user["landing_link"] = masteragent_agent_subagents_path(params["masteragent_id"],params["stid"])
+    puts "***************************"
+    puts  @user.struct_id
+    puts "***************************"
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.' }
+        format.json { render :show, status: :created, location: @subagent }
+      else
+        format.html { redirect_to masteragent_agents_path}
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def index
+    params[:id] = 22
+    @user = User.new
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agents = Agent.all.where(masteragent_id: params["masteragent_id"])
     @position = Shop.joins(subagent: [agent:[:masteragent]]).where(masteragents: {id: params["masteragent_id"]})

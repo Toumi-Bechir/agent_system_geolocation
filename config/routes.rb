@@ -10,17 +10,16 @@ Myapp::Application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  #devise_scope :users do
-  #  get '/users/sign_out' => 'devise/sessions#destroy'
-  #end
-  resources :structacess do
+
+  resources :shops
+  resources :masteragents do
     member do
       match :createauth, to: :assign, via: [:post, :patch]
     end
-  end
-  resources :shops
-  resources :masteragents do
     resources :agents do
+      member do
+        match :createauth, to: :assign, via: [:post, :patch]
+      end
       resources :subagents do
         member do
           get :newauth

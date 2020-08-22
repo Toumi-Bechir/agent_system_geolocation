@@ -4,8 +4,29 @@ class MasteragentsController < ApplicationController
 
   # GET /masteragents
   # GET /masteragents.json
-  def index
+  def createauth
+    @user = User.new(:email => params["email"], :password => params["password"], :password_confirmation => params["password_confirmation"])
+    @user["role_id"] = 2
+    @user["struct_id"] = params["stid"]
+    @user["landing_link"] = masteragent_agents_path(params["stid"])
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.'}
+        format.json { render :show, status: :created, location: @subagent }
+      else
+        format.html { redirect_to masteragents_path, notice: 'Credentials was not created.'}
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
+  def index
+    puts "***************************"
+    puts  current_user.role.name
+    puts "***************************"
+
+    params[:id] = 22
+    @user = User.new
     @position = []
     @pcount = 0
     @masteragents = Masteragent.all

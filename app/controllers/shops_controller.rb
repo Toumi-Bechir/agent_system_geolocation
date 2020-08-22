@@ -20,6 +20,10 @@ class ShopsController < ApplicationController
   # GET /shops
   # GET /shops.json
   def index
+    puts "***********************************"
+    puts request.path #request.original_url #request.env['REQUEST_URI']
+    puts "***********************************"
+
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
@@ -117,5 +121,26 @@ class ShopsController < ApplicationController
     def shop_params
       #params.fetch(:shop, {})
       params.require(:shop).permit(:name, :subagent_id, :agent_id, :masteragent_id)
+    end
+    def access_managment
+      case current_user.role.name
+      when "subagent"
+        if (current_user.struct_id == params["subagent_id"])
+          @result = "ok"
+        end
+
+      when "admin"
+        @result = "ok"
+      else
+        @result = "nok"
+      end
+    end
+    def redirect_usr
+      if (access_managment == "ok" )
+        puts "***************************"
+        puts  current_user.role.name
+        puts "***************************"
+        redirect_to pages_lockscreen_path
+      end
     end
 end
