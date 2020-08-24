@@ -1,6 +1,7 @@
 class AgentsController < ApplicationController
   before_action :set_agent, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :redirect_usr
 
   # GET /agents
   # GET /agents.json
@@ -9,9 +10,6 @@ class AgentsController < ApplicationController
     @user["role_id"] = 3
     @user["struct_id"] = params["stid"]
     @user["landing_link"] = masteragent_agent_subagents_path(params["masteragent_id"],params["stid"])
-    puts "***************************"
-    puts  @user.struct_id
-    puts "***************************"
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.' }
@@ -108,4 +106,26 @@ class AgentsController < ApplicationController
       #params.fetch(:agent, {})
       params.require(:agent).permit(:name, :masteragent_id)
     end
+    def access_managment
+      case current_user.role.name
+      when "subagent"
+        @result = "nok"
+
+      when "agent"
+        @result = "nok"
+
+      when "master"
+        if current_user.struct_id == params["masteragent_id"].to_i
+          @result = "ok"
+        end
+
+      when "admin"
+        @result = "ok"
+
+      else
+        @result = "nok"
+      end
+    end
+
+    
 end

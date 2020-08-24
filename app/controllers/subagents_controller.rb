@@ -1,14 +1,11 @@
 class SubagentsController < ApplicationController
   before_action :set_subagent, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  #before_action :redirect_usr
+  before_action :redirect_usr
 
   # GET /subagents
   # GET /subagents.json
   def newauth
-    puts "***************************"
-    puts  params
-    puts "***************************"
     @user = User.new
     #redirect_to controller: 'users/registrations', action: 'new'
   end
@@ -19,9 +16,6 @@ class SubagentsController < ApplicationController
     @user["struct_id"] = params["stid"]
     @user["landing_link"] = masteragent_agent_subagent_shops_path(params["masteragent_id"],params["agent_id"],params["stid"])
 
-    puts "***************************"
-    puts  masteragent_agent_subagent_shops_path(params["masteragent_id"],params["agent_id"],params["id"])
-    puts "***************************"
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.' } #masteragent_agent_subagents_path
@@ -36,20 +30,23 @@ class SubagentsController < ApplicationController
   def index
     params[:id] = 22
     @user = User.new
-    puts "***************************"
-    puts  params
-    puts "***************************"
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = Subagent.all.where(agent_id: params["agent_id"])
     @position = Shop.joins(subagent: [agent:[:masteragent]]).where(masteragents: {id: params["masteragent_id"]})
     @hash = Gmaps4rails.build_markers(@position) do |position, marker|
+      if !position.lat.blank?
+        puts "---------------lat value------------------"
+        puts position.lat
+        puts position.lng
+        puts position.name
+        puts "---------------lat value----end--------------"
       marker.lat  position.lat
       marker.lng  position.lng
       marker.title position.name
       marker.infowindow render_to_string(:partial => "info",
               :locals => {:name => position.name, :lat => position.lat, :lng => position.lng, :id => 22})
-
+            end
     end
   end
 
@@ -136,18 +133,25 @@ class SubagentsController < ApplicationController
     def access_managment
       case current_user.role.name
       when "subagent"
+        @result = "nok"
+
+      when "agent"
+        if current_user.struct_id == params["agent_id"].to_i
+          @result = "ok"
+        end
+
+      when "master"
+        if current_user.struct_id == params["masteragent_id"].to_i
+          @result = "ok"
+        end
+
+      when "admin"
         @result = "ok"
 
       else
         @result = "nok"
       end
-    end
-    def redirect_usr
-      if (access_managment == "ok" )
-        puts "***************************"
-        puts  current_user.role.name
-        puts "***************************"
-        redirect_to pages_lockscreen_path
-      end
+
+
     end
 end

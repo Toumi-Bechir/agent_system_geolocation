@@ -1,7 +1,7 @@
 class ShopsController < ApplicationController
   before_action :set_shop, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:index, :edit, :update, :destroy]
-  before_action :redirect_usr
+  before_action :redirect_usr, only: [:index, :edit, :update, :destroy]
   def get_positions
     @positions = Shop.select(:lat, :lng).where(:subagent_id => params["subagent_id"])
 
@@ -118,11 +118,11 @@ class ShopsController < ApplicationController
       #params.fetch(:shop, {})
       params.require(:shop).permit(:name, :subagent_id, :agent_id, :masteragent_id)
     end
+
     def access_managment
 
-
-
       case current_user.role.name
+
 
       when "subagent"
         @agentid = Subagent.find(current_user.struct_id).agent_id
@@ -134,33 +134,27 @@ class ShopsController < ApplicationController
         end
 
       when "agent"
-
-        current_user.subagent.each do |subagent|
-
+        @subs = Subagent.where(agent_id: current_user.struct_id)
+        #@result = "nok"
+        @subs.each do |subagent|
+          if subagent.id == params["subagent_id"].to_i
+            @result = "ok"
+          end
+        end
+      when "master"
+        if current_user.struct_id == params["masteragent_id"].to_i
+          @result = "ok"
         end
 
       when "admin"
-
         @result = "ok"
-
 
       else
         @result = "nok"
       end
 
+      return @result
     end
 
-    def redirect_usr
-
-      if access_managment == "ok"
-        puts "****start***********************"
-        puts  "ACCESS GRANTED"
-        puts "****end***********************"
-      else
-        puts "****start***********************"
-        puts  "RESTRICTED AREA REDIRECTED"
-        puts "****end***********************"
-        redirect_to current_user.landing_link #pages_lockscreen_path
-      end
-    end
+    
 end

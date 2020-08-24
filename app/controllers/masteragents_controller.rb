@@ -1,6 +1,7 @@
 class MasteragentsController < ApplicationController
   before_action :set_masteragent, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :redirect_usr
 
   # GET /masteragents
   # GET /masteragents.json
@@ -116,4 +117,24 @@ class MasteragentsController < ApplicationController
       #params.fetch(:masteragent, {})
       params.require(:masteragent).permit(:name)
     end
+    def access_managment
+      case current_user.role.name
+      when "subagent"
+        @result = "nok"
+
+      when "agent"
+        @result = "nok"
+
+      when "master"
+        @result = "nok"
+
+
+      when "admin"
+        @result = "ok"
+
+      else
+        @result = "nok"
+      end
+    end
+
 end
