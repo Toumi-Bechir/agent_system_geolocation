@@ -12,6 +12,9 @@ class MasteragentsController < ApplicationController
     @user["landing_link"] = masteragent_agents_path(params["stid"])
     respond_to do |format|
       if @user.save
+        @master = Masteragent.find(params["stid"])
+        @master.account = true
+        @master.save
         format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.'}
         format.json { render :show, status: :created, location: @subagent }
       else
@@ -22,10 +25,6 @@ class MasteragentsController < ApplicationController
   end
 
   def index
-    puts "***************************"
-    puts  current_user.role.name
-    puts "***************************"
-
     params[:id] = 22
     @user = User.new
     @position = []
@@ -45,7 +44,6 @@ class MasteragentsController < ApplicationController
       marker.lat  position.lat
       marker.lng  position.lng
       marker.title position.name
-      #marker.json({ name: position.name })
       marker.infowindow render_to_string(:partial => "info",
               :locals => {:name => position.name, :lat => position.lat, :lng => position.lng })
 

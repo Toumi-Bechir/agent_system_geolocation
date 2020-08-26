@@ -1,23 +1,18 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
       <h2><%= link_to 'BT', masteragents_path %></h2>
-        <h2>Localisation</h2>
+        <!--<h2>Localisation</h2>-->
         <ol class="breadcrumb">
           <li>
-              <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
+              <a><%= link_to 'Tout les Masters', masteragents_path %></a>
         </li>
           <li>
-                <strong><%= link_to @masteragent.name, masteragent_agents_path(@masteragent.id) %></strong>
+                <a><%= link_to @masteragent.name, masteragent_agents_path(@masteragent.id) %></a>
         </li>
         <li>
-            <a><%= link_to @agent.name, masteragent_agent_subagents_path(@agent.masteragent_id ,@agent.id) %></a>
+            <strong><%= link_to @agent.name, masteragent_agent_subagents_path(@agent.masteragent_id ,@agent.id) %></strong>
         </li>
-        <li>
-            <a>Shops</a>
-        </li>
-        <li class="active">
-            <strong>Localisation</strong>
-        </li>
+
     </ol>
 </div>
 <div class="col-lg-2">
@@ -36,7 +31,7 @@
     <div class="col-lg-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Sous Agents</h5>
+                <h5><%= @agent.name %></h5>
             </div>
             <div class="ibox-content">
 
@@ -44,12 +39,12 @@
                   <ol class="dd-list">
                       <li class="dd-item" data-id="1">
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= @masteragent.name %>
+                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= link_to @masteragent.name, masteragent_agents_path(@masteragent) %>
                           </div>
                           <ol class="dd-list">
                               <li class="dd-item" data-id="2">
                                   <div class="dd-handle">
-                                      <span class="label label-info"><i class="fa fa-users"></i></span> <%= @agent.name %>
+                                      <span class="label label-info"><i class="fa fa-users"></i></span> <%= link_to @agent.name, masteragent_agent_subagents_path(@agent.masteragent_id ,@agent.id) %>
                                   </div>
                                   <ol class="dd-list">
                                       <li class="dd-item" data-id="1">
@@ -57,12 +52,13 @@
                                           <div class="dd-handle">
                                               <span class="label label-info"><i class="fa fa-bullseye"></i></span> <%= link_to subagents.name, masteragent_agent_subagent_shops_path(@masteragent, @agent, subagents) %>
                                               <% link_to 'Details',  masteragent_agent_subagent_path(@masteragent, @agent, subagents), class:"btn btn-outline btn-success pull-right" %>
-
                                               <%= link_to 'Edit', edit_masteragent_agent_subagent_path(@masteragent, @agent, subagents), class: "btn btn-outline btn-warning pull-right" %>
                                               <% link_to 'Account', newauth_masteragent_agent_subagent_path(@masteragent, @agent, subagents), class: "btn btn-outline btn-primary pull-right" %>
+                                              <% if !subagents.account? %>
                                               <button type="button" class="btn btn-outline btn-primary pull-right" data-toggle="modal" data-target="#myModal" id="<%= subagents.id %>" onClick="get_id(this.id)">
                                                   <i class="fa fa-key"></i>
                                               </button>
+                                              <% end %>
                                           </div>
                                           <% end %>
                                       </li>

@@ -2,20 +2,20 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
       <h2><%= link_to 'BT', masteragents_path %></h2>
-        <h2>Localisation</h2>
+        <!--<h2>Localisation</h2>-->
         <ol class="breadcrumb">
           <li>
-              <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
+              <a><%= link_to 'Tout les Masters', masteragents_path %></a>
         </li>
             <li>
                 <strong><%= link_to @masteragent.name, masteragent_agents_path(@masteragent.id) %></strong>
         </li>
-        <li>
+      <!--  <li>
             <a>Shops</a>
         </li>
         <li class="active">
             <strong>Localisation</strong>
-        </li>
+        </li>-->
     </ol>
 </div>
 <div class="col-lg-2">
@@ -33,14 +33,14 @@
     <div class="col-lg-6">
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Agents</h5>
+                <h5><%= @masteragent.name %></h5>
             </div>
             <div class="ibox-content">
               <div class="dd" id="nestable2">
                   <ol class="dd-list">
                       <li class="dd-item" data-id="1">
                           <div class="dd-handle">
-                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= @masteragent.name %>
+                              <span class="label label-info"><i class="fa fa-laptop"></i></span> <%= link_to @masteragent.name, masteragent_agents_path(@masteragent) %>
                           </div>
                           <ol class="dd-list">
                             <li class="dd-item" data-id="1">
@@ -52,9 +52,11 @@
 
                                       </div>
                                     <%= link_to 'Edit', edit_masteragent_agent_path(agent.masteragent_id ,agent.id), class: "btn btn-outline btn-warning pull-right" %>
+                                    <% if !agent.account? %>
                                     <button type="button" class="btn btn-outline btn-primary pull-right" data-toggle="modal" data-target="#myModal" id="<%= agent.id %>" onClick="get_id(this.id)">
                                         <i class="fa fa-key"></i>
                                     </button>
+                                    <% end %>
                                 </div>
                                 <% end %>
 

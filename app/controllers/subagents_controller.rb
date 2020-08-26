@@ -18,6 +18,9 @@ class SubagentsController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        @subagent = Subagent.find(params["stid"])
+        @subagent.account = true
+        @subagent.save
         format.html { redirect_to @user["landing_link"], notice: 'Credentials was successfully created.' } #masteragent_agent_subagents_path
         format.json { render :show, status: :created, location: @subagent }
       else
@@ -33,20 +36,16 @@ class SubagentsController < ApplicationController
     @masteragent = Masteragent.find(params["masteragent_id"])
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = Subagent.all.where(agent_id: params["agent_id"])
-    @position = Shop.joins(subagent: [agent:[:masteragent]]).where(masteragents: {id: params["masteragent_id"]})
+    #@position = Shop.joins(subagent: [agent:[:masteragent]]).where(masteragents: {id: params["masteragent_id"]}).where.not(lat: nil)
+    @position = Shop.joins(subagent: :agent).where(agents: {id: params["agent_id"]}).where.not(lat: nil)
     @hash = Gmaps4rails.build_markers(@position) do |position, marker|
-      if !position.lat.blank?
-        puts "---------------lat value------------------"
-        puts position.lat
-        puts position.lng
-        puts position.name
-        puts "---------------lat value----end--------------"
+      #if !position.lat.blank?
       marker.lat  position.lat
       marker.lng  position.lng
       marker.title position.name
       marker.infowindow render_to_string(:partial => "info",
               :locals => {:name => position.name, :lat => position.lat, :lng => position.lng, :id => 22})
-            end
+            #end
     end
   end
 

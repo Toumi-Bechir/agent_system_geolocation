@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_22_080707) do
+ActiveRecord::Schema.define(version: 2020_08_25_124753) do
 
   create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_080707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "masteragent_id"
+    t.boolean "account"
     t.index ["masteragent_id"], name: "index_agents_on_masteragents_id"
   end
 
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_080707) do
     t.decimal "lng", precision: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "account"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -38,8 +40,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_080707) do
 
   create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
-    t.decimal "lat", precision: 10, scale: 8
-    t.decimal "lng", precision: 10, scale: 8
+    t.decimal "lat", precision: 10, scale: 8, default: "35.863332"
+    t.decimal "lng", precision: 10, scale: 8, default: "18.195493"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "subagent_id"
@@ -53,6 +55,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_080707) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "agent_id"
+    t.boolean "account"
     t.index ["agent_id"], name: "index_subagents_on_agents_id"
   end
 

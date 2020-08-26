@@ -24,7 +24,7 @@ class ShopsController < ApplicationController
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
     @shops = Shop.all.where(subagent_id: params["subagent_id"])
-    @positions = Shop.select(:lat, :lng, :name).where(:subagent_id => params["subagent_id"])
+    @positions = Shop.select(:lat, :lng, :name).where(:subagent_id => params["subagent_id"]).where.not(lat: nil)
     @hash = Gmaps4rails.build_markers(@positions) do |position, marker|
       marker.lat  position.lat
       marker.lng  position.lng
@@ -44,7 +44,6 @@ class ShopsController < ApplicationController
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagents = @agent.subagents.find(params["subagent_id"])
     @shop = Shop.find(params["id"])
-    #render :layout => "layout_4"
   end
 
   # GET /shops/new
@@ -53,7 +52,6 @@ class ShopsController < ApplicationController
     @agent = @masteragent.agents.find(params["agent_id"])
     @subagent = @agent.subagents.find(params["subagent_id"])
     @shop = @subagent.shops.build
-    #@shop = Shop.new
   end
 
   # GET /shops/1/edit
@@ -155,6 +153,4 @@ class ShopsController < ApplicationController
 
       return @result
     end
-
-    
 end

@@ -2,17 +2,17 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
       <h2><%= link_to 'BT', masteragents_path %></h2>
-        <h2>Localisation</h2>
+        <!--<h2>Localisation</h2>-->
         <ol class="breadcrumb">
             <li>
                 <strong><%= link_to 'Tout les Masters', masteragents_path %></strong>
         </li>
-        <li>
+        <!--<li>
             <a>Shops</a>
         </li>
         <li class="active">
             <strong>Localisation</strong>
-        </li>
+        </li>-->
     </ol>
 </div>
 <div class="col-lg-2">
@@ -29,7 +29,7 @@
     </div>
     <% end %>
     <div class="col-lg-6">
-      
+
         <div class="ibox ">
             <div class="ibox-title">
                 <h5>Master Agents</h5>
@@ -44,9 +44,11 @@
                               <% link_to 'Details', masteragent, class:"btn btn-outline btn-success pull-right" %>
 
                               <%= link_to 'Edit', edit_masteragent_path(masteragent), class: "btn btn-outline btn-warning pull-right" %>
+                              <% if !masteragent.account? %>
                               <button type="button" class="btn btn-outline btn-primary pull-right" data-toggle="modal" data-target="#myModal" id="<%= masteragent.id %>" onClick="get_id(this.id)">
                                   <i class="fa fa-key"></i>
                               </button>
+                              <% end %>
                           </div>
                           <% end %>
                       </li>
